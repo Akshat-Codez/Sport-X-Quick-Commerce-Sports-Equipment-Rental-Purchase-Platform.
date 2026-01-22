@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>SportX</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header class="header">
+  <div>
+    <h1>SportX</h1>
+    <p>Rent • Buy Sports Equipment ⚡ 1-Hour Delivery</p>
+  </div>
+  <div class="header-icons">
+  <span class="icon-btn" onclick="openProfile()">👤</span>
+  <span class="icon-btn" onclick="openCart()">🛒</span>
+  <button class="checkout-btn" onclick="checkout()">Checkout</button>
+</div>
+
+</header>
+
+<nav class="navbar">
+  <a onclick="showSection('products')">Buy / Rent</a>
+  <a onclick="showSection('contact')">Contact</a>
+</nav>
+
+<div class="search-box">
+  <input type="text" id="searchInput" placeholder="Search sports equipment..." onkeyup="searchProducts()">
+</div>
+
+<!-- PRODUCTS -->
+<section id="products" class="section active">
+<h2>All Sports Equipment</h2>
+
+<div class="grid">
+
+<!-- Football -->
+<div class="card">
+  <img src="https://tse2.mm.bing.net/th/id/OIP.3MW0t3HMZdIuxSKegV81_QHaI7">
+  <h4>Football</h4>
+  <p>₹999 | Rent ₹39/day</p>
+  <div class="btn-row">
+    <button class="buy" onclick="addBuy('Football',999)">Buy</button>
+    <button class="rent" onclick="openRent('Football',39)">Rent</button>
+  </div>
+</div>
+
+<!-- Cricket Bat -->
+<div class="card">
+  <img src="https://tse1.mm.bing.net/th/id/OIP.ZiL64l0hCsM5fwaCCAJRkAAAAA">
+  <h4>Cricket Bat</h4>
+  <p>₹1299 | Rent ₹45/day</p>
+  <div class="btn-row">
+    <button class="buy" onclick="addBuy('Cricket Bat',1299)">Buy</button>
+    <button class="rent" onclick="openRent('Cricket Bat',45)">Rent</button>
+  </div>
+</div>
+
+<!-- Football Shoes -->
+<div class="card">
+  <img src="https://tse3.mm.bing.net/th/id/OIP.JTEWTNpYyHjTn1rBWAtBuAHaD4">
+  <h4>Football Shoes</h4>
+  <p>₹1099 | Rent ₹90/day</p>
+
+  <select class="size-select">
+    <option value="">Select Size</option>
+    <option>7</option>
+    <option>8</option>
+    <option>9</option>
+    <option>10</option>
+  </select>
+
+  <div class="btn-row">
+    <button class="buy" onclick="addShoeBuy(this,'Football Shoes',1099)">Buy</button>
+    <button class="rent" onclick="openShoeRent(this,'Football Shoes',90)">Rent</button>
+  </div>
+</div>
+
+</div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="section hidden">
+  <div class="contact-box">
+    <h2>Contact SportX</h2>
+    <p class="tagline">Fast • Reliable • Affordable Sports Equipment Rentals</p>
+
+    <div class="contact-grid">
+      <div class="contact-card">
+        <h4>📞 Customer Support</h4>
+        <p>Email: support@sportx.com</p>
+        <p>Phone: +91 88409 76870</p>
+        <p>Available 9 AM – 9 PM</p>
+      </div>
+
+      <div class="contact-card">
+        <h4>🚚 Delivery</h4>
+        <p>⚡ 1-Hour Express Delivery</p>
+        <p>📍 Live Tracking</p>
+        <p>🔄 Easy Returns</p>
+      </div>
+
+      <div class="contact-card">
+        <h4>🛡 Trust & Safety</h4>
+        <p>✔ Sanitized Equipment</p>
+        <p>✔ Secure Payments</p>
+        <p>✔ Quality Assurance</p>
+      </div>
+    </div>
+
+    <h3>Terms & Conditions</h3>
+    <ul>
+      <li>Rental duration: 7 – 20 days</li>
+      <li>₹999 refundable security deposit for rentals</li>
+      <li>No deposit required for purchases</li>
+      <li>Refund processed within 48 hours after return</li>
+      <li>Late return may attract penalty</li>
+    </ul>
+
+    <button class="back-btn" onclick="showSection('products')">← Back to Home</button>
+  </div>
+</section>
+
+<!-- RENT MODAL -->
+<div class="modal" id="rentModal">
+  <div class="modal-content">
+    <span class="close" onclick="closeRent()">×</span>
+    <h3 id="rentItem"></h3>
+    <label>Choose Rent Days</label>
+    <select id="rentDays">
+      <!-- Full 7–20 options -->
+      <script>
+        for(let i=7;i<=20;i++){
+          document.write(`<option>${i}</option>`);
+        }
+      </script>
+    </select>
+    <button onclick="addRent()">Add to Cart</button>
+  </div>
+</div>
+
+<!-- CART -->
+<div class="modal" id="cartModal">
+  <div class="modal-content">
+    <span class="close" onclick="closeCart()">×</span>
+    <h3>Your Cart</h3>
+    <div id="cartItems"></div>
+    <p>Total: ₹<span id="totalAmount">0</span></p>
+    <button onclick="checkout()">Checkout</button>
+  </div>
+</div>
+<!-- PAYMENT MODAL -->
+<div class="modal" id="paymentModal">
+  <div class="modal-content">
+    <span class="close" onclick="closePayment()">×</span>
+    <h3>Checkout</h3>
+
+    <input id="userName" placeholder="Name (letters only)">
+    <input id="userPhone" placeholder="Phone (10 digits)">
+    <input id="userAddress" placeholder="Delivery Address">
+
+    <select id="payMethod" onchange="showPayment(this.value)">
+      <option value="">Select Payment</option>
+      <option value="upi">UPI</option>
+      <option value="card">Card</option>
+      <option value="wallet">Wallet</option>
+    </select>
+
+    <!-- UPI -->
+    <div id="upiBox" class="hidden">
+      <input id="upiId" placeholder="Enter UPI ID">
+      <button onclick="proceedOTP()">Proceed</button>
+    </div>
+
+    <!-- CARD -->
+    <div id="cardBox" class="hidden">
+      <input placeholder="Card Number">
+      <input placeholder="Expiry (MM/YY)">
+      <input placeholder="CVV">
+      <button onclick="proceedOTP()">Proceed</button>
+    </div>
+
+    <!-- OTP -->
+   <div id="otpBox" class="hidden">
+  <input id="otpInput" placeholder="Enter OTP">
+  <button onclick="confirmPayment()">Confirm Payment</button>
+</div>
+
+  </div>
+</div>
+
+<!-- PROFILE -->
+<div class="modal" id="profileModal">
+  <div class="modal-content">
+    <span class="close" onclick="closeProfile()">×</span>
+    <h3>User Profile</h3>
+    <p>Name: <span id="pName">Guest</span></p>
+    <p>Wallet: ₹<span id="wallet">500</span></p>
+
+    <input id="addMoney" type="number" placeholder="Add money">
+    <button onclick="addWallet()">Add</button>
+
+    <h4>Order History</h4>
+    <div id="orders"></div>
+  </div>
+</div>
+
+<footer>© 2026 SportX</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
