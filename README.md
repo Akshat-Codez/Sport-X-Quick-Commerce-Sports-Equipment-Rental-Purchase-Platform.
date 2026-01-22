@@ -1,0 +1,1 @@
+SportX is a socially driven sports rental platform that empowers young athletes by giving them access to professional-grade sports equipment at minimal cost. It helps remove financial barriers in sports training and selection processes.
